@@ -1,0 +1,15 @@
+name: 'wbm_server'
+version: 0.0.1
+description: Dart WS application for 'Who blocks me'
+author: Gregory DEPUILLE <gregory.depuille@gmail.com>
+#homepage: https://www.example.com
+
+environment:
+  sdk: '>=1.0.0 <2.0.0'
+
+dependencies:
+  args: '>=0.10.0 <0.14.0'
+  redstone: '>=0.5.0 <0.6.0'
+  redstone_mapper_pg: '>=0.1.0 <0.2.0'
+  wbm_model:
+    path: ../wbm-model
