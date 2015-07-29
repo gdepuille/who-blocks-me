@@ -1,17 +1,28 @@
 // Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-import 'dart:html';
-
-import 'package:paper_elements/paper_input.dart';
 import 'package:polymer/polymer.dart';
 
-/// A Polymer `<main-app>` element.
+import '../delegate/auth_delegate.dart';
+
+import '../locators/ui_model_locator.dart';
+import '../locators/main_model_locator.dart';
+
 @CustomTag('main-app')
 class MainApp extends PolymerElement {
 
-  /// Constructor used to create instance of MainApp.
+  @observable
+  UIModelLocator uiModel = new UIModelLocator();
+
+  @observable
+  MainModelLocator mainModel = new MainModelLocator();
+
   MainApp.created() : super.created();
+
+  logout() {
+    AuthDelegate d = new AuthDelegate();
+    d.logout();
+  }
 
   // Optional lifecycle methods - uncomment if needed.
 

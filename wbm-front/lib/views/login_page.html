@@ -1,0 +1,57 @@
+<!--
+  Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
+  is governed by a BSD-style license that can be found in the LICENSE file.
+-->
+
+<!-- import polymer-element's definition -->
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
+<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
+<link rel="import" href="../../../packages/core_elements/core_icon.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/paper_elements/paper_button.html">
+
+<polymer-element name="login-page">
+    <template>
+        <style>
+            :host {
+                display: block;
+                width: 70%;
+                height: 300px;
+            }
+
+            core-header-panel {
+                height: 100%;
+                width: 100%;
+            }
+
+            core-toolbar {
+                background: #7F7F7F;
+                color: beige;
+            }
+
+            .content {
+                background-color: #e3e3e3;
+                padding: 5px;
+            }
+        </style>
+
+        <core-header-panel>
+            <core-toolbar>
+                <div>Authentification</div>
+            </core-toolbar>
+
+            <div class="content" layout vertical>
+                <paper-input id="tiUsername" label="Username" floatingLabel="true"></paper-input>
+                <paper-input id="tiPassword" label="Password" floatingLabel="true"></paper-input>
+                <p align="right">
+                    <paper-button id="btnLogin" on-click="{{loginHandler}}" raised>
+                        Login
+                        <core-icon icon="chevron-right"></core-icon>
+                    </paper-button>
+                </p>
+            </div>
+        </core-header-panel>
+    </template>
+    <script type="application/dart" src="login_page.dart"></script>
+</polymer-element>

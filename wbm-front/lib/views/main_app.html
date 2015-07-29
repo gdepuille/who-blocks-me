@@ -1,0 +1,64 @@
+<!--
+  Copyright (c) 2015, <your name>. All rights reserved. Use of this source code
+  is governed by a BSD-style license that can be found in the LICENSE file.
+-->
+
+<!-- import polymer-element's definition -->
+<link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/core_elements/core_header_panel.html">
+<link rel="import" href="../../../packages/core_elements/core_toolbar.html">
+<link rel="import" href="../../../packages/core_elements/core_animated_pages.html">
+<link rel="import" href="../../../packages/core_elements/core_transition.html">
+<link rel="import" href="../../../packages/paper_elements/paper_button.html">
+
+<link rel="import" href="login_page.html">
+<link rel="import" href="user_page.html">
+
+<polymer-element name="main-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      core-header-panel {
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      core-toolbar {
+        background: #7F7F7F;
+        color: beige;
+      }
+
+      .container {
+        width: 80%;
+        margin: 50px auto;
+      }
+
+      @media (min-width: 481px) {
+        .container {
+          width: 400px;
+        }
+      }
+    </style>
+
+    <core-header-panel>
+      <core-toolbar layout horizontal>
+        Who Blocks Me ?
+        <div hidden?="{{mainModel.user == null}}">{{mainModel.user.nom}} {{mainModel.user.prenom}} <paper-button on-click="{{logout}}">Logout</paper-button></div>
+      </core-toolbar>
+      <div class="container" center>
+        <core-animated-pages selected="{{uiModel.mainViewIdx}}" transitions="slide-from-right">
+          <login-page></login-page>
+          <user-page></user-page>
+        </core-animated-pages>
+      </div>
+    </core-header-panel>
+
+  </template>
+  <script type="application/dart" src="main_app.dart"></script>
+</polymer-element>

@@ -3,9 +3,12 @@
 
 import 'package:polymer/polymer.dart';
 
-@CustomTag('login-page')
-class LoginPage extends PolymerElement {
+import '../delegate/user_delegate.dart';
+import '../locators/main_model_locator.dart';
 
-  LoginPage.created() : super.created();
+@CustomTag('user-page')
+class UserPage extends PolymerElement {
+
+  UserPage.created() : super.created();
 
 }
