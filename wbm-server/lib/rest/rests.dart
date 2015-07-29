@@ -16,6 +16,26 @@ var _errorHeaders = {
   "Content-Type": "application/json"
 };
 
+// Cors interceptor
+@srv.Interceptor(r'/.*')
+corsInterceptor() {
+  if (srv.request.method == 'OPTIONS') {
+    //overwrite the current response and interrupt the chain.
+    srv.response = new shelf.Response.ok(null, headers: _createCorsHeader());
+    srv.chain.interrupt();
+  } else {
+    //process the chain and wrap the response
+    srv.chain.next(() => srv.response.change(headers: _createCorsHeader()));
+  }
+}
+
+_createCorsHeader() => {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, GET, DELETE, OPTIONS',
+  'Access-Control-Max-Age': '1728000'
+};
+
 // Handler d'erreur
 @srv.ErrorHandler(HttpStatus.INTERNAL_SERVER_ERROR)
 shelf.Response onInternalServerError() {
@@ -35,7 +55,7 @@ shelf.Response onUnauthorizedError() {
 
 @srv.ErrorHandler(HttpStatus.FORBIDDEN)
 shelf.Response onAccessDeniedError() {
-  ApplicationError error = new ApplicationError(code: 'NON_AUTORISE', message: 'Veuillez vous authentifier.');
+  ApplicationError error = new ApplicationError(code: 'NON_AUTORISE', message: 'Veuillez ne disposez pas des authorisations nécéssaires.');
   return new shelf.Response.forbidden(mapper.encodeJson(error), headers: _errorHeaders);
 }
 

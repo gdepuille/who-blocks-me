@@ -34,7 +34,7 @@ class UserService extends PostgreSqlService<User> {
     String queryString = '''
     SELECT *
     FROM users
-    WHERE (mail = @username OR username = @username) AND password = @password
+    WHERE (mail = @username OR login = @username) AND password = @password
     ''';
 
     Completer<User> completer = new Completer<User>();

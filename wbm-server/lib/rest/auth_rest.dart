@@ -15,7 +15,6 @@ class AuthRest {
 
   AuthRest(UserService this._userService);
 
-  @Encode()
   @srv.Route("/login", methods: const [srv.POST])
   Future<Map<String, Object>> login(@srv.Body(srv.JSON) Map<String, String> body) {
     ApplicationError error = new ApplicationError(code: "AUTHENTIFICATION_INVALID", message: "Login ou mot de passe invalide");
@@ -29,6 +28,13 @@ class AuthRest {
     String username = body["username"];
     String password = body["password"];
     this._userService.findByCredentials(username, password).then((User u) {
+      HttpSession session = srv.request.session;
+      session["user"] = u;
+
+      // TODO : Charger les profils.
+      List<Profil> profils = [Profil.AUTHENTICATED];
+      session["roles"] = profils;
+
       completer.complete({"success": true, "userId": u.id});
     }).catchError((_) {
       completer.completeError(error);
@@ -37,10 +43,9 @@ class AuthRest {
     return completer.future;
   }
 
-  @Encode()
   @srv.Route("/logout")
-  Map<String, bool> logout() {
+  Map<String, Object> logout() {
     srv.request.session.destroy();
-    return this._userService.updateUser(user);
+    return {"success": true};
   }
 }

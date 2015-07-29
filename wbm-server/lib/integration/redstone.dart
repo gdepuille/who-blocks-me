@@ -27,24 +27,35 @@ class Secured {
 }
 
 /**
- * Définition du plugin de gestion
+ * Définition du plugin de gestion de la sécurisation
  */
 srv.RedstonePlugin getAuthorizationPlugin() {
   Logger log = new Logger("AuthorizationPlugin");
 
   Function routeWrapper = (dynamic metadata, Map<String, String> pathSegments, Injector injector, srv.Request request, srv.RouteHandler route) {
     Secured s = metadata as Secured;
-    log.fine("Tentative d'accès sécurisé à la méthode ${request.requestedUri.toString()}.");
+    log.fine("Tentative d'accès sécurisé à la méthode ${request.requestedUri.toString()}. Autorisé pour ${s.roles.join(", ")}");
 
     HttpSession session = srv.request.session;
     if (!session.containsKey("user")) {
-      throw new srv.ErrorResponse(HttpStatus.UNAUTHORIZED, null);
+      log.warning("Aucun utilisateur en session pour cette requête.");
+      //throw new srv.ErrorResponse(HttpStatus.UNAUTHORIZED, null);
     }
 
     List<Profil> userRoles = session["roles"];
-    if (!userRoles.contains(s.roles)) {
-      throw new srv.ErrorResponse(HttpStatus.FORBIDDEN, null);
-    }
+
+    /*if (userRoles == null || !userRoles.any((p) {
+      for (Profil up in s.roles) {
+        if (up.toString() == p.toString()) {
+          return true;
+        }
+      }
+
+      return false;
+    })) {
+      log.warning("Les roles de l'utilisateur (${userRoles.join(", ")}) ne sont pas valide.");
+      //throw new srv.ErrorResponse(HttpStatus.FORBIDDEN, null);
+    }*/
 
     return route(pathSegments, injector, request);
   };
