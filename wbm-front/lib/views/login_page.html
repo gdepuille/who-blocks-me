@@ -8,7 +8,9 @@
 <link rel="import" href="../../../packages/core_elements/core_header_panel.html">
 <link rel="import" href="../../../packages/core_elements/core_toolbar.html">
 <link rel="import" href="../../../packages/core_elements/core_icon.html">
+
 <link rel="import" href="../../../packages/paper_elements/paper_input.html">
+<link rel="import" href="../../../packages/paper_elements/paper_input_decorator.html">
 <link rel="import" href="../../../packages/paper_elements/paper_button.html">
 
 <polymer-element name="login-page">
@@ -43,7 +45,9 @@
 
             <div class="content" layout vertical>
                 <paper-input id="tiUsername" label="Username" floatingLabel="true"></paper-input>
-                <paper-input id="tiPassword" label="Password" floatingLabel="true"></paper-input>
+                <paper-input-decorator label="Password" floatingLabel="true">
+                    <input id="tiPassword" type="password" is="core-input">
+                </paper-input-decorator>
                 <p align="right">
                     <paper-button id="btnLogin" on-click="{{loginHandler}}" raised>
                         Login

@@ -5,9 +5,10 @@
 
 <!-- import polymer-element's definition -->
 <link rel="import" href="../../../packages/polymer/polymer.html">
+<link rel="import" href="../../../packages/core_elements/core_animated_pages.html">
+<link rel="import" href="../../../packages/core_elements/core_icon_button.html">
 <link rel="import" href="../../../packages/core_elements/core_header_panel.html">
 <link rel="import" href="../../../packages/core_elements/core_toolbar.html">
-<link rel="import" href="../../../packages/core_elements/core_animated_pages.html">
 <link rel="import" href="../../../packages/core_elements/core_transition.html">
 <link rel="import" href="../../../packages/paper_elements/paper_button.html">
 
@@ -39,6 +40,14 @@
         margin: 50px auto;
       }
 
+      .header {
+        width: 100%;
+      }
+
+      .headerCompte {
+          font-size: 0.8em;
+      }
+
       @media (min-width: 481px) {
         .container {
           width: 400px;
@@ -47,12 +56,14 @@
     </style>
 
     <core-header-panel>
-      <core-toolbar layout horizontal>
-        Who Blocks Me ?
-        <div hidden?="{{mainModel.user == null}}">{{mainModel.user.nom}} {{mainModel.user.prenom}} <paper-button on-click="{{logout}}">Logout</paper-button></div>
+      <core-toolbar>
+        <div class="header" horizontal layout>
+          <div flex>Who Blocks Me ?</div>
+          <div class="headerCompte" hidden?="{{mainModel.user == null}}">{{mainModel.user.nom}} {{mainModel.user.prenom}} <core-icon-button icon="settings-power" on-click="{{logout}}"></core-icon-button></div>
+        </div>
       </core-toolbar>
       <div class="container" center>
-        <core-animated-pages selected="{{uiModel.mainViewIdx}}" transitions="slide-from-right">
+        <core-animated-pages selected="{{uiModel.mainViewIdx}}" transitions="zoom">
           <login-page></login-page>
           <user-page></user-page>
         </core-animated-pages>
